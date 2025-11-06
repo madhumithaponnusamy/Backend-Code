@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Date</title>
+</head>
+
+<body>
+
+
+    <label for="inputDate">Enter a date: </label>
+    <input type="date" id="inputDate">
+
+    <button onclick="processDate()">Show Result</button>
+
+    <p id="result"></p>
+
+    <script>
+
+        function processDate() {
+
+            var dateValue = document.getElementById("inputDate").value;
+
+
+            var d1 = new Date();
+
+
+            d1.setDate(d1.getDate())
+            console.log(d1.getDate())
+
+            var currentDate = new Date();
+            var birthDate = new Date("2004-04-02")
+            var currentAge = currentDate.getFullYear() - birthDate.getFullYear();
+            console.log(currentAge)
+
+            var month = currentDate.getMonth() + 1;
+            console.log(month);
+
+            var hours = currentDate.getHours();
+            console.log("Hours:", hours);
+
+            var minutes = currentDate.getMinutes();
+            console.log("Minutes:", minutes);
+
+            var seconds = currentDate.getSeconds();
+            console.log("Seconds:", seconds);
+
+            var milliseconds = currentDate.getMilliseconds();
+            console.log("Milliseconds:", milliseconds);
+
+            document.getElementById("result").innerText = "Today Date: " + d1 + "Given Date:" + dateValue +
+             "currentAge:" +currentAge + "month:"+month + "hours:" +hours +
+             "minutes:"+minutes+"seconds:"+seconds+"milliseconds:"+milliseconds;
+
+        }
+
+    </script>
+</body>
+
+</html>
