@@ -1,8 +1,56 @@
+<%- include('common/header') %>
 
-<center>
-    <h3 style="color:blue;">Result</h3>
-        <h3 >Total: <%=total %></h3>
-        <h3 >Success: <%=success %></h3>
-        <h3 >Failure: <%=failure %></h3>
+<h1 style="text-align: center;">Students List</h1>
 
-</center>
+<table border="1" cellpadding="5"
+style="border-collapse: collapse;; 
+ text-align: left; font-size: 12px; ">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>DOB</th>
+      <th>PhoneNumber</th>
+      <th>Gender</th>
+       <th>Subjects</th>
+        <th>Place</th>
+         <th>Club</th>
+          <th>Address</th>
+          <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (results && results.length > 0) { %>
+      <% results.forEach(student => { %>
+        <tr>
+          <td><%= student.studentId %></td>
+          <td><%= student.name %></td>
+          <td><%= student.email %></td>
+           <td><%= student.password %></td>
+            <td><%= student.dob %></td>
+             <td><%= student.phoneNumber %></td>
+             <td><%= student.gender %></td>
+             <td><%= student.subjects %></td>
+             <td><%= student.place %></td>
+             <td><%= student.club %></td>
+             <td><%= student.address %></td>
+             
+
+         <td>
+            <a href="/student/<%= student.studentId %>" style="color: blue; text-decoration: underline;">Edit</a>
+            <a href="/delete/<%= student.studentId %>" style="color: blue; text-decoration: underline;">Delete</a>
+</td>
+
+        </tr>
+      <% }) %>
+    <% } else { %>
+      <tr>
+        <td colspan="4" style="text-align: center;">No students found</td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<%- include('common/footer') %>
