@@ -37,7 +37,7 @@ app.get('/form', (req, res) => {
 });
 
 app.get('/student', (req, res) => {
-  res.render('student', { title: 'Student Page' });
+  res.render('studentForm', { title: 'Student Creattion', student: {} });
 });
 
 
@@ -66,13 +66,14 @@ app.post('/student', (req, res) => {
   console.log(req.body);
 
 
- 
-
   const sql = `
     INSERT INTO studentsdata 
     (name, age, email, password, dob, phoneNumber, gender, subjects, place, club, address)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
+
+  const subjects = Array.isArray(req.body.subjects) ? req.body.subjects.join(',') : ''
+  const clubs = Array.isArray(req.body.club) ? req.body.club.join(',') : ''
 
   const values = [
     req.body.name,
@@ -82,9 +83,9 @@ app.post('/student', (req, res) => {
     req.body.dob,
     req.body.phoneNumber,
     req.body.gender,
-    req.body.subjects.join(','),
+    subjects,
     req.body.place,
-    req.body.club,
+    clubs,
     req.body.address
   ];
 
@@ -96,7 +97,7 @@ app.post('/student', (req, res) => {
     } else {
       console.log(' Insert Success:', result);
     }
-    res.render('student', { err, result });
+    res.redirect('/select')
   });
 });
 
@@ -163,6 +164,25 @@ app.get('/select', (req, res) => {
     res.render('select', { title: 'Students List', results });
   });
 });
+
+app.get('/student/edit/:studentId', (req, res) => {
+  const studentId = req.params.studentId;
+
+  const sql = `SELECT * FROM studentsdata WHERE studentId = ?`;
+  db.query(sql, [studentId], (err, results) => {
+    if (err) {
+      console.error('Query error:', err); // doubt
+      return res.status(500).send('Database error');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send('Student not found');
+    }
+
+    res.render('studentForm', { title: 'Update Student', student: results[0] });
+  });
+});
+
 
 
 
